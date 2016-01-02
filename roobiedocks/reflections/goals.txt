@@ -1,0 +1,15 @@
+goals - 
+1) Just learn.. Seriously..
+
+Is there a dream job you’re working toward? 
+1) Trying to look into my dreams. Its blank. Facing the odds. Trying new things.
+
+Is there a project idea you’ve been aching to start working on?
+1) Yes im doing projects like these
+     1.1) Khedawal - An ionic app specifically for the khedawal community (https://en.wikipedia.org/wiki/Khedaval)
+          Features List
+             1) Contacts Integration
+             2) Feature request - People can ask and vote what they want - Future dev will  be based on this
+             3) Contribution - Only code is accepted - Money ? (will work that out later)
+     2.2) A shopping app - An ionic app for the website http://nexuslighting.in/ 
+            built by me using shopify (Got intrested in ruby because of shopify's simplicity)

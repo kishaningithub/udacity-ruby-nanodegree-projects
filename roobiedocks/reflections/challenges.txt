@@ -1,0 +1,9 @@
+Time is always my challenge.. I tend to take up work more than i can handle
+
+Have you tried learning a programming language before? 
+ - Yes all the time
+Was any part of it difficult for you? 
+ - Debugging!!!
+Is there anything about being a Ruby developer you’d like to know more about?
+ - Is is cooler than scala?
+ - Is ruby easy on debuggers?

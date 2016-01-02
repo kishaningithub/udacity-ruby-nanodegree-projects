@@ -1,0 +1,17 @@
+skills you have
+  1) Programming
+  2) Playing chess
+
+prior knowledge
+  1) Java (4 years experience day in and day out)
+  2) Several JS Tech
+  3) Swift
+  4) Scala
+  5) Python
+  
+Current company
+  1) Oracle financial services
+  
+Transferrable skills
+  1) Functional and object oriented programming
+     concepts learnt from scala and java.
