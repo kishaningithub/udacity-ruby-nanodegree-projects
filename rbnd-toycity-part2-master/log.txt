@@ -1,0 +1,29 @@
+commit 52cdb1399708b0b6276b62cd55ce5c8a90408190
+Author: Kishan B <kishancs46@gmail.com>
+Date:   Tue Jan 5 07:23:14 2016 +0000
+
+    feat(Brand report): Added brand report
+
+commit b2efbc6228cc859ab0e55d4543637e119df5f5b8
+Author: Kishan B <kishancs46@gmail.com>
+Date:   Tue Jan 5 07:02:41 2016 +0000
+
+    feat(Products report): Added product report
+
+commit 4bbd4ed808e4c4fbd282f1a5f628e32f3f183dc8
+Author: Kishan B <kishancs46@gmail.com>
+Date:   Tue Jan 5 06:36:17 2016 +0000
+
+    feat(get_heading): ASCII Art for all report types
+
+commit 5d563b51da12aee3019f92dfd08defee4c439fb9
+Author: Kishan B <kishancs46@gmail.com>
+Date:   Tue Jan 5 06:28:13 2016 +0000
+
+    Created control structure
+
+commit 95a878070a78e991971d2b875abc25133b2d0c5f
+Author: Kishan B <kishancs46@gmail.com>
+Date:   Sat Jan 2 02:13:54 2016 +0000
+
+    Initial commit of toycity 2
