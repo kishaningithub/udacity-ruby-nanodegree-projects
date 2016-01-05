@@ -1,26 +1,33 @@
 require 'json'
-path = File.join(File.dirname(__FILE__), '../data/products.json')
-file = File.read(path)
-products_hash = JSON.parse(file)
 
-# Print "Sales Report" in ascii art
+def get_heading(heading_type) # No Side Effects
+end
 
-# Print today's date
+def get_products_section_data(products) # No Side Effects
+end
 
-# Print "Products" in ascii art
+def get_printable_products_section(report_data_lst) # No Side Effects
+end
 
-# For each product in the data set:
-	# Print the name of the toy
-	# Print the retail price of the toy
-	# Calculate and print the total number of purchases
-  # Calcalate and print the total amount of sales
-  # Calculate and print the average price the toy sold for
-  # Calculate and print the average discount based off the average sales price
+def make_products_section(products_hash)  # No Side Effects
+end
 
-# Print "Brands" in ascii art
+def get_brands_section_data(products)  # No Side Effects
+end
 
-# For each brand in the data set:
-	# Print the name of the brand
-	# Count and print the number of the brand's toys we stock
-	# Calculate and print the average price of the brand's toys
-	# Calculate and print the total sales volume of all the brand's toys combined
+def get_printable_brands_section(report_data_lst)  # No Side Effects
+end
+
+def make_brands_section(products_hash) # No Side Effects
+end
+
+def setup_files # Has Side Effects!
+end
+
+def create_report(products_hash, report_file) # Has Side Effects!
+end
+
+def start # Has Side Effects! Obviously
+end
+
+start
