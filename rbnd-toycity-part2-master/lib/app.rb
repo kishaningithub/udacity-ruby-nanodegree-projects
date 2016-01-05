@@ -85,19 +85,55 @@ def make_products_section(products_hash)  # No Side Effects
 end
 
 def get_brands_section_data(products)  # No Side Effects
+    brand_report_data = []
+    brands = products.map{|product| product['brand']}.uniq
+    brands.each do |brand|
+        products_in_brand = products.select {|product| product['brand'] == brand}
+        brand_name = brand # name of the brand
+        no_of_products = products_in_brand.map {|product| product['stock']}.reduce(:+) # Number of the brand's toys we stock
+        
+        total_price = products_in_brand.map {|product| product['full-price'].to_f}.reduce(:+) 
+        avg_price = total_price / products_in_brand.length # Average price of the brand's toys
+        total_sales = products_in_brand.map {|product| product['purchases']}.flatten.map{|purchase| purchase['price'].to_f}.reduce(:+) # Total sales volume of all the brand's toys combined
+
+        brand_report_data << 
+        {
+            brand_name: brand_name,
+            no_of_products: no_of_products,
+            avg_price: avg_price.round(2),
+            total_sales: total_sales.round(2)
+        }
+      end   
+    brand_report_data
 end
 
 def get_printable_brands_section(report_data_lst)  # No Side Effects
+    lines = []
+    star_sep = "*" * 35
+    report_data_lst.each do |report_data|
+        lines << report_data[:brand_name] # Human readable name of the brand
+        lines << star_sep
+        lines << "Number of Products: #{report_data[:no_of_products]}" # Human readable number of the brand's toys we stock
+        lines << "Average Product Price: $#{report_data[:avg_price]}" # Human readable average price of the brand's toys
+        lines << "Total Sales: $#{report_data[:total_sales]}" # Human readable total sales volume of all the brand's toys combined
+        lines << ""
+    end
+    if lines.length > 0
+        lines.pop
+    end
+    lines
 end
 
 def make_brands_section(products_hash) # No Side Effects
+  report_data_lst = get_brands_section_data products_hash['items']
+  get_printable_brands_section report_data_lst
 end
 
 def setup_files # Has Side Effects!
     path = File.join(File.dirname(__FILE__), '../data/products.json')
     file = File.read(path)
     products_hash = JSON.parse(file)
-    report_file = File.new("report.txt", "w")
+    report_file = File.new("report.txt", "w") # Im only going to write so changed from read-write (w+) to only write (w)
     return products_hash, report_file
 end
 
