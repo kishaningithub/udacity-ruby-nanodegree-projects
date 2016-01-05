@@ -38,12 +38,50 @@ def get_heading(heading_type) # No Side Effects
 end
 
 def get_products_section_data(products) # No Side Effects
+    products_report_data =[]
+    products.each do |product|
+        product_title =  product['title']
+        retail_price = product['full-price'].to_f
+        total_purchases = product['purchases'].length 
+        total_sales = product['purchases'].map{|purchase| purchase['price']}.reduce(:+)  # Total amount of sales
+        avg_price = total_sales / total_purchases  # Average price the toy sold for
+        avg_discount = ( (retail_price - avg_price) / retail_price) * 100  # Average discount based off the average sales price
+        
+        products_report_data <<
+        {
+            product_title: product_title, 
+            retail_price: retail_price,
+            total_purchases: total_purchases,
+            total_sales: total_sales,
+            avg_price: avg_price,
+            avg_discount: avg_discount.round(2)
+        }
+    end
+    products_report_data
 end
 
 def get_printable_products_section(report_data_lst) # No Side Effects
+    lines = []
+    star_sep = "*" * 35
+    report_data_lst.each do |report_data|
+        lines << report_data[:product_title] # Human readable name of the toy
+        lines << star_sep
+        lines << "Retail Price: $#{report_data[:retail_price]}" # Human readable retail price of the toy
+        lines << "Total Purchases: #{report_data[:total_purchases]}" # Human readable total number of purchases
+        lines << "Total Sales Volume: $#{report_data[:total_sales]}" # Human readable total amount of sales
+        lines << "Average Price: $#{report_data[:avg_price]}" # Human readable average price the toy sold for
+        lines << "Average Discount: #{report_data[:avg_discount]}%" # Human readable average discount based off the average sales price
+        lines << ""
+    end
+    if lines.length > 0
+        lines.pop
+    end
+    lines
 end
 
 def make_products_section(products_hash)  # No Side Effects
+    report_data_lst = get_products_section_data products_hash['items']
+    get_printable_products_section report_data_lst
 end
 
 def get_brands_section_data(products)  # No Side Effects
@@ -56,12 +94,29 @@ def make_brands_section(products_hash) # No Side Effects
 end
 
 def setup_files # Has Side Effects!
+    path = File.join(File.dirname(__FILE__), '../data/products.json')
+    file = File.read(path)
+    products_hash = JSON.parse(file)
+    report_file = File.new("report.txt", "w")
+    return products_hash, report_file
 end
 
 def create_report(products_hash, report_file) # Has Side Effects!
+    report_file.puts get_heading :sales_report  # Print "Sales Report" in ascii art
+    
+    report_file.puts Time.now.strftime("Generated On: %d-%b-%Y") # Print today's date
+    
+    report_file.puts get_heading :products # Print "Products" in ascii art
+    report_file.puts make_products_section products_hash
+    
+	report_file.puts get_heading :brands # Print "Brands" in ascii art
+	report_file.puts make_brands_section products_hash
 end
 
 def start # Has Side Effects! Obviously
+  products_hash, report_file = setup_files # load, read, parse, and create the files
+  create_report products_hash, report_file # create the report!
+  report_file.close
 end
 
 start
