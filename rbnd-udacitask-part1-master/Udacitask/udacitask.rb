@@ -48,8 +48,12 @@ puts TodoList.new("Kishan's Stuff")
 #Implement sub tasks
 puts "List with sub items"
 another_todo_lst = TodoList.new("Goals")
-another_todo_lst.add_item("Learn Rails", {sub_items: ["Learn shell scripting", "Learn ruby", "Learn Functional programming concepts", "Dont see ruby as java"]})
+another_todo_lst.add_item("Learn Rails", sub_items: ["Learn shell scripting", "Learn ruby", "Learn Functional programming concepts", "Dont see ruby as java"], )
 puts another_todo_lst
 
-
+#Implement due dates
+puts "List with sub items & due dates"
+another_todo_lst = TodoList.new("Goals")
+another_todo_lst.add_item("Learn Rails", sub_items: ["Learn shell scripting", "Learn ruby", "Learn Functional programming concepts", "Dont see ruby as java"], due_date: Date.new(2016,12,1))
+puts another_todo_lst
 

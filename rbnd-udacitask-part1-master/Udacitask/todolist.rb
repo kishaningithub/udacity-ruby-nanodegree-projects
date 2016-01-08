@@ -17,10 +17,13 @@ class TodoList
         end
      end
      
-    def add_item(new_item, options = {sub_items: []})
+    def add_item(new_item, options = {sub_items: [], due_date: nil})
         item = Item.new(new_item)
         if ! options[:sub_items].empty? then
             item.add_subitems(options[:sub_items])
+        end
+        if options[:due_date] then
+            item.due_date = options[:due_date]
         end
         @items.push(item)
     end
@@ -71,6 +74,8 @@ class TodoList
 end
 
 class Item
+    
+    attr_accessor :due_date
 
     def initialize(item_description)
         @description = item_description
@@ -92,7 +97,7 @@ class Item
     
     def to_s
         print_lst = []
-        print_lst << "#{@description} Completed: #{@completed_status}"
+        print_lst << "#{@description} Completed: #{@completed_status} #{if due_date then "Due date :#{due_date}" end }"
         print_lst << "Subtasks" unless @sub_items.empty?
         @sub_items.each.with_index(1) {|item, index| print_lst << "#{index} #{item}"}
         print_lst.join("\n")
