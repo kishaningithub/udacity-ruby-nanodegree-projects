@@ -10,6 +10,19 @@ class TodoList
         @items.push(item)
     end
     
+    def delete_item_at(index)
+        @items.delete_at(index - 1) # Just to make it more "human friendly (delete first item)"
+    end    
+    
+    def update_completion_status_at(index)
+        item = @items[index - 1] # Just to make it more "human friendly (Update the completion status of first item)"
+        item.update_completion_status
+    end
+    
+    def rename(new_title)
+        @title = new_title
+    end
+    
     def to_s
         header_divider = "-" * 20
         print_lst = []
@@ -19,21 +32,29 @@ class TodoList
         @items.each.with_index(1)  do |item, index|
            print_lst << "#{index} - #{item}"
         end
+        print_lst << " "
         print_lst.join("\n")
     end
     
 end
 
 class Item
-    attr_reader :description, :completed_status
-    
+
     def initialize(item_description)
         @description = item_description
         @completed_status = false
     end
     
+    def update_completion_status
+        @completed_status = ! @completed_status
+    end
+    
+    def completed?
+        @completed_status
+    end
+    
     def to_s
-        "#{@description} Completed: #{@completed_status}"
+        "#{@description} Completed: #{completed?}"
     end
     
 end

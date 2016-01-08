@@ -13,17 +13,29 @@ toto_lst.add_item("Go dancing!")
 puts toto_lst
 
 # Delete the first item
+puts "Deleting the first item"
+toto_lst.delete_item_at(1)
 
 # Print the list
+puts toto_lst
 
 # Delete the second item
+puts "Deleting the second item"
+toto_lst.delete_item_at(2)
 
 # Print the list
+puts toto_lst
 
 # Update the completion status of the first item to complete
+puts "Updating the completion status of the first item to complete"
+toto_lst.update_completion_status_at(1)
 
 # Print the list
+puts toto_lst
 
 # Update the title of the list
+puts "Updating the title of the list"
+toto_lst.rename("Kishan's Stuff")
 
 # Print the list
+puts toto_lst
