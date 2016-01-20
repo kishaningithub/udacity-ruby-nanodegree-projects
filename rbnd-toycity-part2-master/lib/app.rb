@@ -37,46 +37,60 @@ def get_heading(heading_type) # No Side Effects
     end
 end
 
+# Operations on single product - Start
+def product_title(product)
+   product['title'] 
+end
+
+def retail_price(product)
+    product['full-price'].to_f
+end
+
+def total_purchases(product)
+    product['purchases'].length 
+end
+
+def total_sales(product)
+    product['purchases'].map{|purchase| purchase['price']}.reduce(:+)  # Total amount of sales
+end
+
+def avg_price(product)
+    total_sales(product) / total_purchases(product)  # Average price the toy sold for
+end
+
+def avg_discount(product)
+    ( (retail_price(product) - avg_price(product)) / retail_price(product)) * 100  # Average discount based off the average sales price
+end
+#Operations on single product - End
+
 def get_products_section_data(products) # No Side Effects
-    products_report_data =[]
-    products.each do |product|
-        product_title =  product['title']
-        retail_price = product['full-price'].to_f
-        total_purchases = product['purchases'].length 
-        total_sales = product['purchases'].map{|purchase| purchase['price']}.reduce(:+)  # Total amount of sales
-        avg_price = total_sales / total_purchases  # Average price the toy sold for
-        avg_discount = ( (retail_price - avg_price) / retail_price) * 100  # Average discount based off the average sales price
-        
-        products_report_data <<
+    products.map do |product|
         {
-            product_title: product_title, 
-            retail_price: retail_price,
-            total_purchases: total_purchases,
-            total_sales: total_sales,
-            avg_price: avg_price,
-            avg_discount: avg_discount.round(2)
+            product_title: product_title(product), 
+            retail_price: retail_price(product),
+            total_purchases: total_purchases(product),
+            total_sales: total_sales(product),
+            avg_price: avg_price(product),
+            avg_discount: avg_discount(product).round(2)
         }
     end
-    products_report_data
+end
+
+def star_sep
+    "*" * 35
 end
 
 def get_printable_products_section(report_data_lst) # No Side Effects
-    lines = []
-    star_sep = "*" * 35
-    report_data_lst.each do |report_data|
-        lines << report_data[:product_title] # Human readable name of the toy
-        lines << star_sep
-        lines << "Retail Price: $#{report_data[:retail_price]}" # Human readable retail price of the toy
-        lines << "Total Purchases: #{report_data[:total_purchases]}" # Human readable total number of purchases
-        lines << "Total Sales Volume: $#{report_data[:total_sales]}" # Human readable total amount of sales
-        lines << "Average Price: $#{report_data[:avg_price]}" # Human readable average price the toy sold for
-        lines << "Average Discount: #{report_data[:avg_discount]}%" # Human readable average discount based off the average sales price
-        lines << ""
+    report_data_lst.map do |report_data|
+        [report_data[:product_title], # Human readable name of the toy
+         star_sep,
+         "Retail Price: $#{report_data[:retail_price]}", # Human readable retail price of the toy
+         "Total Purchases: #{report_data[:total_purchases]}", # Human readable total number of purchases
+         "Total Sales Volume: $#{report_data[:total_sales]}", # Human readable total amount of sales
+         "Average Price: $#{report_data[:avg_price]}", # Human readable average price the toy sold for
+         "Average Discount: #{report_data[:avg_discount]}%", # Human readable average discount based off the average sales price
+         ""]
     end
-    if lines.length > 0
-        lines.pop
-    end
-    lines
 end
 
 def make_products_section(products_hash)  # No Side Effects
@@ -84,44 +98,53 @@ def make_products_section(products_hash)  # No Side Effects
     get_printable_products_section report_data_lst
 end
 
-def get_brands_section_data(products)  # No Side Effects
-    brand_report_data = []
-    brands = products.map{|product| product['brand']}.uniq
-    brands.each do |brand|
-        products_in_brand = products.select {|product| product['brand'] == brand}
-        brand_name = brand # name of the brand
-        no_of_products = products_in_brand.map {|product| product['stock']}.reduce(:+) # Number of the brand's toys we stock
-        
-        total_price = products_in_brand.map {|product| product['full-price'].to_f}.reduce(:+) 
-        avg_price = total_price / products_in_brand.length # Average price of the brand's toys
-        total_sales = products_in_brand.map {|product| product['purchases']}.flatten.map{|purchase| purchase['price'].to_f}.reduce(:+) # Total sales volume of all the brand's toys combined
+# Operations on product array - Start
+def products_brands(products)
+    products.map{|product| product['brand']}.uniq
+end
 
-        brand_report_data << 
+def products_in_brand(products, brand)
+    products.select {|product| product['brand'] == brand}
+end
+
+def products_no_of_products(products)
+    products.map {|product| product['stock']}.reduce(:+) # Number of the brand's toys we stock
+end
+
+def products_total_price(products)
+   products.map {|product| product['full-price'].to_f}.reduce(:+)  
+end
+
+def products_avg_price(products)
+    products_total_price(products) / products.length
+end
+
+def products_total_sales(products)
+    products.map {|product| product['purchases']}.flatten.map{|purchase| purchase['price'].to_f}.reduce(:+) # Total sales volume of all the brand's toys combined
+end
+# Operations on product array - End
+
+def get_brands_section_data(products)  # No Side Effects
+    products_brands(products).map do |brand_name|
+        products_in_brand = products_in_brand(products, brand_name)
         {
             brand_name: brand_name,
-            no_of_products: no_of_products,
-            avg_price: avg_price.round(2),
-            total_sales: total_sales.round(2)
+            no_of_products: products_no_of_products(products_in_brand),
+            avg_price: products_avg_price(products_in_brand).round(2),
+            total_sales: products_total_sales(products_in_brand).round(2)
         }
-      end   
-    brand_report_data
+    end   
 end
 
 def get_printable_brands_section(report_data_lst)  # No Side Effects
-    lines = []
-    star_sep = "*" * 35
-    report_data_lst.each do |report_data|
-        lines << report_data[:brand_name] # Human readable name of the brand
-        lines << star_sep
-        lines << "Number of Products: #{report_data[:no_of_products]}" # Human readable number of the brand's toys we stock
-        lines << "Average Product Price: $#{report_data[:avg_price]}" # Human readable average price of the brand's toys
-        lines << "Total Sales: $#{report_data[:total_sales]}" # Human readable total sales volume of all the brand's toys combined
-        lines << ""
+    report_data_lst.map do |report_data|
+        [report_data[:brand_name], # Human readable name of the brand
+         star_sep,
+         "Number of Products: #{report_data[:no_of_products]}", # Human readable number of the brand's toys we stock
+         "Average Product Price: $#{report_data[:avg_price]}", # Human readable average price of the brand's toys
+         "Total Sales: $#{report_data[:total_sales]}", # Human readable total sales volume of all the brand's toys combined
+         ""]
     end
-    if lines.length > 0
-        lines.pop
-    end
-    lines
 end
 
 def make_brands_section(products_hash) # No Side Effects

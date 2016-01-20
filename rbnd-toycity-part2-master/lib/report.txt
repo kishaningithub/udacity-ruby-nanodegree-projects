@@ -7,7 +7,7 @@
  #     # #    # #      #      #    #    #    #  #      #      #    # #   #    #  
   #####  #    # ###### ######  ####     #     # ###### #       ####  #    #   #  
 ********************************************************************************
-Generated On: 05-Jan-2016
+Generated On: 20-Jan-2016
 
                      _            _       
                     | |          | |      
@@ -41,6 +41,7 @@ Total Sales Volume: $379.98
 Average Price: $189.99
 Average Discount: 5.0%
 
+
  _                         _     
 | |                       | |    
 | |__  _ __ __ _ _ __   __| |___ 
@@ -58,3 +59,4 @@ Nano Blocks
 Number of Products: 12
 Average Product Price: $49.99
 Total Sales: $68.98
+
