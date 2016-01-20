@@ -1,3 +1,9 @@
+commit 48374201f7629df79fa36cc242afc0830af38300
+Author: Kishan B <kishancs46@gmail.com>
+Date:   Wed Jan 20 08:26:43 2016 +0000
+
+    fix(single purpose methods): Created methods not exceeding 10 lines and serving a single purpose
+    
 commit 52cdb1399708b0b6276b62cd55ce5c8a90408190
 Author: Kishan B <kishancs46@gmail.com>
 Date:   Tue Jan 5 07:23:14 2016 +0000
